@@ -15,6 +15,7 @@
 		143F03FC26EAD38C007F5620 /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F03FB26EAD38C007F5620 /* EmojiMemoryGameView.swift */; };
 		143F03FE26EAD38E007F5620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 143F03FD26EAD38E007F5620 /* Assets.xcassets */; };
 		143F040126EAD38E007F5620 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 143F040026EAD38E007F5620 /* Preview Assets.xcassets */; };
+		14FC854026FBFE3A00A8D0B7 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FC853F26FBFE3A00A8D0B7 /* Cardify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		143F03FD26EAD38E007F5620 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		143F040026EAD38E007F5620 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		143F040226EAD38E007F5620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14FC853F26FBFE3A00A8D0B7 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				1429E21526F2A8A00095374B /* MemoryGame.swift */,
 				1429E21726F2AC550095374B /* EmojiMemoryGame.swift */,
+				14FC853F26FBFE3A00A8D0B7 /* Cardify.swift */,
 				143F03FB26EAD38C007F5620 /* EmojiMemoryGameView.swift */,
 				143E535826F994A500AFAD33 /* Pie.swift */,
 				143E535626F93DDC00AFAD33 /* AspectVGrid.swift */,
@@ -112,6 +115,7 @@
 				TargetAttributes = {
 					143F03F526EAD38C007F5620 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1300;
 					};
 				};
 			};
@@ -151,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				143E535926F994A500AFAD33 /* Pie.swift in Sources */,
+				14FC854026FBFE3A00A8D0B7 /* Cardify.swift in Sources */,
 				1429E21626F2A8A00095374B /* MemoryGame.swift in Sources */,
 				143F03FC26EAD38C007F5620 /* EmojiMemoryGameView.swift in Sources */,
 				143F03FA26EAD38C007F5620 /* MemorizeApp.swift in Sources */,
@@ -283,6 +288,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
 				DEVELOPMENT_TEAM = KDULM2WB9Q;
@@ -295,6 +301,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fun.axag.Memorize;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -305,6 +312,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
 				DEVELOPMENT_TEAM = KDULM2WB9Q;

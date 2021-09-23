@@ -32,30 +32,30 @@ struct CardView: View {
     
     var body: some View {
         GeometryReader(content: { geometry in
+            
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                if card.isFaceUp {
-                    shape.fill().foregroundColor(.white)
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                    Pie(startAngel: Angle(degrees: 0-90), endAngel:Angle(degrees: 030)).padding(5).opacity(0.5)
-                    Text(card.content).font(font(in: geometry.size))
-                } else if(card.isMatched) {
-                    shape.opacity(0)
-                } else {
-                    shape.fill()
-                }
-            }
+                Pie(startAngel: Angle(degrees: 0-90), endAngel:Angle(degrees: 030)).padding(5).opacity(0.5)
+                Text(card.content)
+                    .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+                    .font(Font.system(size: DrawingConstants.fontSize))
+                    .scaleEffect(scale(thatFits: geometry.size))
+//                    .font(font(in: geometry.size)).scaleEffect()
+            }.cardify(isFaceUp: card.isFaceUp)
         })
     }
-
+    
+    private func scale(thatFits size: CGSize) -> CGFloat {
+        min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.fontScale)
+    }
+    
     private func font(in size: CGSize) -> Font {
         Font.system(size: min(size.width, size.height) * DrawingConstants.fontScale)
     }
     
     private struct DrawingConstants {
-        static let cornerRadius: CGFloat = 10.0
-        static let lineWidth: CGFloat = 3
         static let fontScale: CGFloat = 0.7
+        static let fontSize: CGFloat = 32
     }
 }
 
@@ -73,6 +73,6 @@ struct ContentView_Previews: PreviewProvider {
         let game = EmojiMemoryGame()
         game.choose(game.cards.first!)
         return EmojiMemoryGameView(game: game)
-//        EmojiMemoryGameView(game: game).preferredColorScheme(.dark)
+        //        EmojiMemoryGameView(game: game).preferredColorScheme(.dark)
     }
 }
