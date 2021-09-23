@@ -32,7 +32,6 @@ struct CardView: View {
     
     var body: some View {
         GeometryReader(content: { geometry in
-            
             ZStack {
                 Pie(startAngel: Angle(degrees: 0-90), endAngel:Angle(degrees: 030)).padding(5).opacity(0.5)
                 Text(card.content)
@@ -40,7 +39,6 @@ struct CardView: View {
                     .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
                     .font(Font.system(size: DrawingConstants.fontSize))
                     .scaleEffect(scale(thatFits: geometry.size))
-//                    .font(font(in: geometry.size)).scaleEffect()
             }.cardify(isFaceUp: card.isFaceUp)
         })
     }

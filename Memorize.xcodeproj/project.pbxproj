@@ -62,11 +62,11 @@
 		143F03F826EAD38C007F5620 /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
+				143E535826F994A500AFAD33 /* Pie.swift */,
+				14FC853F26FBFE3A00A8D0B7 /* Cardify.swift */,
 				1429E21526F2A8A00095374B /* MemoryGame.swift */,
 				1429E21726F2AC550095374B /* EmojiMemoryGame.swift */,
-				14FC853F26FBFE3A00A8D0B7 /* Cardify.swift */,
 				143F03FB26EAD38C007F5620 /* EmojiMemoryGameView.swift */,
-				143E535826F994A500AFAD33 /* Pie.swift */,
 				143E535626F93DDC00AFAD33 /* AspectVGrid.swift */,
 				143F03F926EAD38C007F5620 /* MemorizeApp.swift */,
 				143F03FD26EAD38E007F5620 /* Assets.xcassets */,
