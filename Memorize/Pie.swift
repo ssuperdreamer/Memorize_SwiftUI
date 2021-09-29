@@ -8,9 +8,20 @@
 import SwiftUI
 
 struct Pie: Shape {
+    
     var startAngel: Angle
     var endAngel: Angle
     var clockwise: Bool = false
+    
+    var animatableData: AnimatablePair<Double, Double> {
+        get {
+            AnimatableData(startAngel.radians, endAngel.radians)
+        }
+        set {
+            startAngel = Angle.radians(newValue.first)
+            endAngel = Angle.radians(newValue.second)
+        }
+    }
     
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
