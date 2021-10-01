@@ -20,6 +20,7 @@
 		14429C9B27053AD60051B56C /* EmojiArtModel.Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14429C9A27053AD60051B56C /* EmojiArtModel.Background.swift */; };
 		14429C9D27061DC70051B56C /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14429C9C27061DC70051B56C /* UtilityExtensions.swift */; };
 		14429C9F27061E670051B56C /* EmojiArtDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14429C9E27061E670051B56C /* EmojiArtDocumentView.swift */; };
+		1475EA6327079B41005D4D0F /* UtilityViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475EA6227079B41005D4D0F /* UtilityViews.swift */; };
 		14FC854026FBFE3A00A8D0B7 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FC853F26FBFE3A00A8D0B7 /* Cardify.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		14429C9A27053AD60051B56C /* EmojiArtModel.Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtModel.Background.swift; sourceTree = "<group>"; };
 		14429C9C27061DC70051B56C /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		14429C9E27061E670051B56C /* EmojiArtDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocumentView.swift; sourceTree = "<group>"; };
+		1475EA6227079B41005D4D0F /* UtilityViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViews.swift; sourceTree = "<group>"; };
 		14FC853F26FBFE3A00A8D0B7 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +89,7 @@
 				14429C98270534F10051B56C /* EmojiArtDocument.swift */,
 				14429C9A27053AD60051B56C /* EmojiArtModel.Background.swift */,
 				14429C9C27061DC70051B56C /* UtilityExtensions.swift */,
+				1475EA6227079B41005D4D0F /* UtilityViews.swift */,
 			);
 			path = Memorize;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 				14FC854026FBFE3A00A8D0B7 /* Cardify.swift in Sources */,
 				14429C9F27061E670051B56C /* EmojiArtDocumentView.swift in Sources */,
 				14429C952705309E0051B56C /* EmojiArtModel.swift in Sources */,
+				1475EA6327079B41005D4D0F /* UtilityViews.swift in Sources */,
 				1429E21626F2A8A00095374B /* MemoryGame.swift in Sources */,
 				143F03FC26EAD38C007F5620 /* EmojiMemoryGameView.swift in Sources */,
 				143F03FA26EAD38C007F5620 /* MemorizeApp.swift in Sources */,

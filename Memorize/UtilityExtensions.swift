@@ -13,6 +13,23 @@ extension Collection where Element: Identifiable {
     }
 }
 
+extension CGSize {
+    static func +(lhs: Self, rhs: Self) -> CGSize {
+        CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+    }
+    
+    static func -(lhs: Self, rhs: Self) -> CGSize {
+        CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
+    }
+    
+    static func *(lhs: Self, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+    }
+    
+    static func /(lhs: Self, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
+    }
+}
 
 extension CGRect {
     var center: CGPoint {
@@ -27,6 +44,20 @@ extension Character {
         } else {
             return false
         }
+    }
+}
+
+extension URL {
+    var imageURL: URL {
+        for query in query?.components(separatedBy: "&") ?? [] {
+            let queryComponents = query.components(separatedBy: "=")
+            if queryComponents.count == 2 {
+                if queryComponents[0] == "imgurl", let url = URL(string: queryComponents[1].removingPercentEncoding ?? "") {
+                    return url
+                }
+            }
+        }
+        return baseURL ?? self
     }
 }
 
