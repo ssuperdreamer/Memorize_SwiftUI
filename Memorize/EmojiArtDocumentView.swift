@@ -14,9 +14,6 @@ struct EmojiArtDocumentView: View {
     
     let testEmojis = "😀😷🦠💉👻👀🐶🌲🌎🌞🔥🍎⚽️🚗🚓🚲🛩🚁🛸🏠⌚️🎁🗝🔐❤️⛔️❌❓✅⚠️🎶➕➖🏳"
     
-//    @Status
-    
-    
     var body: some View {
         VStack(spacing: 0) {
             documentBody
