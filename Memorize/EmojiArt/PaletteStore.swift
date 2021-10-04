@@ -68,8 +68,6 @@ class PaletteStore: ObservableObject {
         let unique = (palettes.max(by: { $0.id < $1.id })?.id ?? 0) + 1
         let palette = Palette(name: name, emojis: emojis ?? "", id: unique)
     
-        
-        
         let safeIndex = min(max(index,0),palettes.count)
         palettes.insert(palette, at: safeIndex)
     }
@@ -78,7 +76,7 @@ class PaletteStore: ObservableObject {
 
 
 
-struct Palette: Identifiable, Codable {
+struct Palette: Identifiable, Codable, Hashable {
     var name: String
     var emojis: String
     var id: Int
