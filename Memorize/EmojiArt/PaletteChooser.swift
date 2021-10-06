@@ -14,7 +14,11 @@ struct PaletteChooser: View {
     
     @EnvironmentObject var store: PaletteStore
     
-    @State private var chosenPaletteIndex = 0
+    
+//    @SceneStorage("PaletteChoose.chosenPaletteIndex")
+    
+    @SceneStorage("PaletteChoose.chosenPaletteIndex")
+    private var chosenPaletteIndex = 0
     
     var body: some View {
         let palette = store.palette(at: chosenPaletteIndex)
