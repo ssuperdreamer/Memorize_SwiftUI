@@ -20,6 +20,7 @@ class EmojiArtDocument: ReferenceFileDocument {
     required init(configuration: ReadConfiguration) throws {
         if let data = configuration.file.regularFileContents {
             emojiArt = try EmojiArtModel(json: data)
+            fetchBackgroundImageDataIfNecessary()
         } else {
             throw CocoaError(.fileReadCorruptFile)
         }

@@ -36,11 +36,10 @@ struct PaletteChooser: View {
         }
         .id(palette.id)
         .transition(rollTrainsition)
-//        .popover(isPresented: $editing) {
-//            PaletteEditor(palette: $store.palettes[chosenPaletteIndex])
-//        }
         .popover(item: $paletteToEdit) { palette in
-            PaletteEditor(palette: $store.palettes[palette]) 
+            PaletteEditor(palette: $store.palettes[palette])
+                .wrappedInNavigationViewToMakeDismissable { (paletteToEdit = nil) }
+                
         }
         .sheet(isPresented: $managing) {
             PaletteManager()

@@ -20,6 +20,21 @@ struct OptionalImage: View {
 struct IdentifiableAlert: Identifiable {
     var id: String
     var alert: () -> Alert
+    
+    init(id: String, alert: @escaping () -> Alert) {
+        self.id = id
+        self.alert = alert
+    }
+    
+    init(id: String, title: String, message: String) {
+        self.id = id
+        alert = { Alert(title: Text(title), message: Text(message), dismissButton: .default(Text("OK"))) }
+    }
+    
+    init(title: String, message: String) {
+        self.id = title + message
+        alert = { Alert(title: Text(title), message: Text(message), dismissButton: .default(Text("OK"))) }
+    }
 }
 
 struct AnimatedActionButton: View {
@@ -67,7 +82,7 @@ struct UndoButton: View {
                 if canUndo {
                     Image(systemName: "arrow.uturn.backward.circle")
                 } else {
-                    Image(systemName: "arrow.utrun.forward.circle")
+                    Image(systemName: "arrow.uturn.forward.circle")
                 }
             }.contextMenu {
                 if canUndo {
@@ -88,14 +103,71 @@ struct UndoButton: View {
         }
     }
 }
+
+
+extension UndoManager {
+    var optionalUndoMenuItemTitle: String? {
+        canUndo ? undoMenuItemTitle : nil
+    }
     
-    
-    extension UndoManager {
-        var optionalUndoMenuItemTitle: String? {
-            canUndo ? undoMenuItemTitle : nil
-        }
-        
-        var optionalRedoMenuItemTitle: String? {
-            canRedo ? redoMenuItemTitle : nil
+    var optionalRedoMenuItemTitle: String? {
+        canRedo ? redoMenuItemTitle : nil
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func wrappedInNavigationViewToMakeDismissable(_ dismiss: (() -> Void)?) -> some View {
+        if UIDevice.current.userInterfaceIdiom != .pad, let dismiss = dismiss {
+            NavigationView {
+                self.navigationBarTitleDisplayMode(.inline)
+                    .dismissable(dismiss)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+        } else {
+            self
         }
     }
+    
+    @ViewBuilder
+    func dismissable(_ dismiss:(() -> Void)?) -> some View {
+        if UIDevice.current.userInterfaceIdiom != .pad, let dismiss = dismiss {
+            self.toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") { dismiss() }
+                }
+            }
+        } else {
+            self
+        }
+    }
+}
+
+
+extension View {
+    func compactableToolbar<Content>(@ViewBuilder content: () -> Content) -> some View where Content: View  {
+        self.toolbar {
+            content().modifier(CompactableIntoContextMenu())
+        }
+    }
+}
+
+struct CompactableIntoContextMenu: ViewModifier {
+    @Environment(\.horizontalSizeClass)  var horizontalSizeClass
+    
+    var compact: Bool { horizontalSizeClass == .compact }
+    
+    func body(content: Content) -> some View {
+        if compact {
+            // return a single button with a context menu containing content
+            Button {} label: {
+                Image(systemName: "ellipsis.circle")
+            }
+            .contextMenu {
+                content
+            }
+        } else {
+            content
+        }
+    }
+}

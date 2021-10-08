@@ -18,18 +18,17 @@ struct EmojiArtDocumentView: View {
         VStack(spacing: 0) {
             documentBody
             PaletteChooser(emojiFontSize: defaultEmojiFontSize)
-                
         }
     }
     
     var documentBody: some View {
         GeometryReader { geometry in
             ZStack {
-                Color.white.overlay(
-                    OptionalImage(uiImage: document.backgroundImage)
-                        .scaleEffect(zoomScale)
-                        .position(convertFromEmojiCoordinates((0,0), in: geometry))
-                ).gesture(doubleTapToZoom(in: geometry.size))
+                Color.white
+                OptionalImage(uiImage: document.backgroundImage)
+                    .scaleEffect(zoomScale)
+                    .position(convertFromEmojiCoordinates((0,0), in: geometry))
+                    .gesture(doubleTapToZoom(in: geometry.size))
                 if document.backgroundImageFetchStatus == .fetching {
                     ProgressView().scaleEffect(2)
                 } else {
@@ -42,32 +41,95 @@ struct EmojiArtDocumentView: View {
                     }
                 }
             }.clipped()
-            .onDrop(of: [.plainText, .url, .image], isTargeted: nil) { providers, location in
-                drop(providers: providers, at: location, in: geometry)
-            }
-            .gesture(panGesture().simultaneously(with: zoomGesture()))
-            .alert(item: $alertToShow) { alertToShow in
-                alertToShow.alert()
-            }
-            .onChange(of: document.backgroundImageFetchStatus) { status in
-                switch status {
-                case .failed(let url):
-                    showBackgroundImageFetchFailedAlert(url)
-                default:
-                    break
+                .onDrop(of: [.plainText, .url, .image], isTargeted: nil) { providers, location in
+                    drop(providers: providers, at: location, in: geometry)
                 }
-            }
-            .onReceive(document.$backgroundImage) { image in
-                if autozoom {
-                    zoomToFit(image, in: geometry.size)
+                .gesture(panGesture().simultaneously(with: zoomGesture()))
+                .alert(item: $alertToShow) { alertToShow in
+                    alertToShow.alert()
                 }
-            }
-            .toolbar {
-                UndoButton(
-                    undo: undoManager?.optionalUndoMenuItemTitle,
-                    redo: undoManager?.optionalRedoMenuItemTitle
-                )
-            }
+                .onChange(of: document.backgroundImageFetchStatus) { status in
+                    switch status {
+                    case .failed(let url):
+                        showBackgroundImageFetchFailedAlert(url)
+                    default:
+                        break
+                    }
+                }
+                .onReceive(document.$backgroundImage) { image in
+                    if autozoom {
+                        zoomToFit(image, in: geometry.size)
+                    }
+                }
+                .compactableToolbar {
+                    AnimatedActionButton(title: "Paste Background", systemImage: "doc.on.clipboard") {
+                        pasteBackground()
+                    }
+                    
+                    if Camera.isAvailable {
+                        AnimatedActionButton(title: "Camera", systemImage: "camera") {
+                            backgroundPicker = .camera
+                        }
+                    }
+                    
+                    if PhotoLibrary.isAvailable {
+                        AnimatedActionButton(title: "Search Photos", systemImage: "photo") {
+                            backgroundPicker = .library
+                        }
+                    }
+                    
+                    if let undoManager = undoManager {
+                        if undoManager.canUndo {
+                            AnimatedActionButton(title: undoManager.undoActionName, systemImage: "arrow.uturn.backward") {
+                                undoManager.undo()
+                                print("undoButton")
+                            }
+                        }
+
+                        if undoManager.canRedo {
+                            AnimatedActionButton(title: undoManager.redoActionName, systemImage: "arrow.uturn.forward") {
+                                print("redoButton")
+                                undoManager.redo()
+                            }
+                        }
+                    }
+                }
+                .sheet(item: $backgroundPicker) { pickerType in
+                    switch pickerType {
+                    case .camera: Camera(handlePickedImage: {image in handlePickedImage(image)})
+                    case .library: PhotoLibrary(handlePickedImage: {image in handlePickedImage(image)})
+                    }
+                }
+        }
+    }
+    
+    private func handlePickedImage(_ image: UIImage?) {
+        autozoom = true
+        if let imageData = image?.jpegData(compressionQuality: 1.0) {
+            document.setBackground(.imageData(imageData), undoManager: undoManager)
+        }
+        backgroundPicker = nil
+    }
+    
+    @State private var backgroundPicker: BackgroundPickerType?
+    
+    enum BackgroundPickerType:String, Identifiable {
+        case camera
+        case library
+        var id: String { self.rawValue }
+    }
+    
+    private func pasteBackground() {
+        autozoom = true
+        if let imageData = UIPasteboard.general.image?.jpegData(compressionQuality: 1.0) {
+            document.setBackground(.imageData(imageData), undoManager: undoManager)
+        } else if let url = UIPasteboard.general.url?.imageURL {
+            document.setBackground(.url(url), undoManager: undoManager)
+        } else {
+            alertToShow = IdentifiableAlert(
+                title: "Paste Background",
+                message: "There is no image currently on the pasteboard."
+            )
         }
     }
     
@@ -111,7 +173,7 @@ struct EmojiArtDocumentView: View {
                 }
             }
         }
-
+        
         return found
     }
     
@@ -154,8 +216,8 @@ struct EmojiArtDocumentView: View {
                 gesturePanOffset = lastestDragGestureValue.translation / zoomScale
             }
             .onEnded { finalDragGestureValue in
-            steadyStatePanOffset =  steadyStatePanOffset + (finalDragGestureValue.translation / zoomScale)
-        }
+                steadyStatePanOffset =  steadyStatePanOffset + (finalDragGestureValue.translation / zoomScale)
+            }
     }
     
     
@@ -173,8 +235,8 @@ struct EmojiArtDocumentView: View {
                 gestureZoomScale = latestGestureScale
             }
             .onEnded { gestureScaleAtEnd in
-                    steadyStateZoomScale *= gestureScaleAtEnd
-        }
+                steadyStateZoomScale *= gestureScaleAtEnd
+            }
     }
     
     private func doubleTapToZoom(in size: CGSize) -> some Gesture {
@@ -184,7 +246,7 @@ struct EmojiArtDocumentView: View {
             }
         }
     }
-
+    
     
     private func zoomToFit(_ image: UIImage?, in size: CGSize) {
         if let image = image, image.size.width > 0, image.size.height > 0, size.width > 0, size.height > 0 {
