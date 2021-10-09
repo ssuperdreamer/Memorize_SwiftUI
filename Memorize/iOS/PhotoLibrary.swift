@@ -12,6 +12,9 @@ import PhotosUI
 // L16 Moved to iOS-only on multiplatform version
 
 struct PhotoLibrary: UIViewControllerRepresentable {
+    
+    
+    
     var handlePickedImage: (UIImage?) -> Void
     
     static var isAvailable: Bool {
